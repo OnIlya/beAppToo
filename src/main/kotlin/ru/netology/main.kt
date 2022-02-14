@@ -2,7 +2,7 @@ package ru.netology
 
 
 fun main() {
-    val amountSeconds = 61
+    val amountSeconds = 1400
     val oneMinute = 60
     val oneHour = oneMinute * 60
     val oneDay = oneHour * 24
@@ -46,7 +46,7 @@ fun convertingHoursToText(amountHours: Int, remainsTen: Int = amountHours % 10,
 
     val convertingHoursToText = when {
         (remainsTen == 1 && remainsHundred != 11) -> "час"
-        (remainsTen in 2..4 && remainsHundred !in 12..14) -> "часа"
+        (remainsTen in 2..4) -> "часа"
         (remainsTen in 5..9 || remainsTen == 0 || remainsHundred in 11..20) -> "часов"
         else -> "ошибка"
         }
