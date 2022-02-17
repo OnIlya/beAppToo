@@ -13,7 +13,7 @@ fun main() {
 fun agoToText(amountSeconds: Int): String {
     val amountMinutes = amountSeconds / oneMinute
     val amountHours = amountSeconds / oneHour
-    val convertMinutes = convertingSecondsToText(amountSeconds)
+    val convertMinutes = convertingMinutesToText(amountSeconds)
     val convertHours = convertingHoursToText(amountSeconds)
 
     return when(amountSeconds) {
@@ -26,7 +26,7 @@ fun agoToText(amountSeconds: Int): String {
     }
 }
 
-fun convertingSecondsToText(amountSeconds: Int): String {
+fun convertingMinutesToText(amountSeconds: Int): String {
     val amountMinutes = amountSeconds / oneMinute
     val remainsMinutesTen: Int = amountMinutes % 10
     val remainsMinutesHundred: Int = amountMinutes % 100
