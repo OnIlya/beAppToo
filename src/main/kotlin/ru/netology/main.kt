@@ -1,23 +1,22 @@
 package ru.netology
 
+const val oneMinute = 60
+const val oneHour = 3600
+const val oneDay = 86400
 
 fun main() {
-    val amountSeconds = 50000
-    val oneMinute = 60
-    val oneHour = oneMinute * 60
-    val oneDay = oneHour * 24
-    val amountMinutes = amountSeconds / oneMinute
-    val amountHours = amountMinutes / oneMinute
-    val result = agoToText(amountSeconds, amountMinutes, amountHours, oneMinute, oneHour, oneDay)
+    val amountSeconds = 80000
+    val result = agoToText(amountSeconds)
     println("Пользователь был $result")
 }
 
-fun agoToText(amountSeconds: Int, amountMinutes: Int, amountHours: Int,
-              oneMinute: Int, oneHour: Int, oneDay: Int): String {
-    val convertMinutes = convertingMinutesToText(amountMinutes)
-    val convertHours = convertingHoursToText(amountHours)
+fun agoToText(amountSeconds: Int): String {
+    val amountMinutes = amountSeconds / oneMinute
+    val amountHours = amountSeconds / oneHour
+    val convertMinutes = convertingSecondsToText(amountSeconds)
+    val convertHours = convertingHoursToText(amountSeconds)
 
-    val agoToText = when(amountSeconds) {
+    return when(amountSeconds) {
         in 0..oneMinute -> "только что"
         in oneMinute + 1..oneHour -> "$amountMinutes $convertMinutes назад"
         in oneHour + 1..oneDay -> "$amountHours $convertHours назад"
@@ -25,33 +24,30 @@ fun agoToText(amountSeconds: Int, amountMinutes: Int, amountHours: Int,
         in oneDay * 2 + 1..oneDay * 3 -> "вчера"
         else -> "давно"
     }
-    return agoToText
 }
 
-fun convertingMinutesToText(amountMinutes: Int, remainsTen: Int = amountMinutes % 10,
-                            remainsHundred: Int = amountMinutes % 100): String {
+fun convertingSecondsToText(amountSeconds: Int): String {
+    val amountMinutes = amountSeconds / oneMinute
+    val remainsMinutesTen: Int = amountMinutes % 10
+    val remainsMinutesHundred: Int = amountMinutes % 100
 
-    val convertingMinutesToText = when {
-        (remainsTen == 1 && remainsHundred != 11) -> "минуту"
-        (remainsTen in 2..4 && remainsHundred !in 11..14) -> "минуты"
-        (remainsTen in 5..9 || remainsTen == 0 || remainsHundred in 11..14) -> "минут"
-        else -> "ошибка"
-        }
-
-    return convertingMinutesToText
+    return when {
+        (remainsMinutesTen == 1 && remainsMinutesHundred != 11) -> "минуту"
+        (remainsMinutesTen in 2..4 && remainsMinutesHundred !in 11..14) -> "минуты"
+        else -> "минут"
+    }
 }
 
-fun convertingHoursToText(amountHours: Int, remainsTen: Int = amountHours % 10,
-                          remainsHundred: Int = amountHours % 100): String {
+fun convertingHoursToText(amountSeconds: Int): String {
+    val amountHours = amountSeconds / oneHour
+    val remainsHoursTen: Int = amountHours % 10
+    val remainsHoursHundred: Int = amountHours % 100
 
-    val convertingHoursToText = when {
-        (remainsTen == 1 && remainsHundred != 11) -> "час"
-        (remainsTen in 2..4 && remainsHundred !in 11..14) -> "часа"
-        (remainsTen in 5..9 || remainsTen == 0 || remainsHundred in 11..14) -> "часов"
-        else -> "ошибка"
-        }
-
-    return convertingHoursToText
+    return when {
+        (remainsHoursTen == 1 && remainsHoursHundred != 11) -> "час"
+        (remainsHoursTen in 2..4 && remainsHoursHundred !in 11..14) -> "часа"
+        else -> "часов"
+    }
 }
 
 // Доработка: Сообразил с остатком от деления
